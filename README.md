@@ -123,11 +123,9 @@ This project implements a Scoreboard system using Java and Spring Boot. The syst
 1. Build the Docker image:
    ```bash
    docker build -t scoreboard-app .
-
 2. Run the container:
    ```bash
    docker run -p 8080:8080 --name scoreboard-container scoreboard-app
-   
 3. Verify the container is running:
    ```bash
    docker ps
