@@ -131,6 +131,16 @@ This project implements a Scoreboard system using Java and Spring Boot. The syst
    docker ps
 
 ---
+
+### **Scaling with Docker Compose & Load Balancing**
+* Note : If you are using this, do not use "Containerization with Docker" commands to build and run docker image as compose will do it.
+* Here we have created 3 replicas of the scoreboard-app and used nginx to balance traffic across our replicas.
+* It will use docker-compose.yml, my_conf.conf and Dockerfile to create image and run containers.
+* It will allow us to access our end-point through different containers with the same Base-URL.
+1. Build and start the containers:
+   ```bash
+   docker-compose up --build
+---
 ### **Contact**
 For questions or support, please contact:
 - Email: hirparamilan@gmail.com

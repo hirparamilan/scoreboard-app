@@ -1,0 +1,25 @@
+version: "4"
+
+services:
+  scoreboard-app:
+    image: scoreboard-app
+    build:
+      context: .
+    deploy:
+      replicas: 3
+    networks:
+      - app-network
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:80"  # Expose port 80 from NGINX to host port 8080
+    volumes:
+      - ./conf.d:/etc/nginx/conf.d
+    depends_on:
+      - scoreboard-app
+    networks:
+      - app-network
+
+networks:
+  app-network:
