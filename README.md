@@ -134,12 +134,44 @@ This project implements a Scoreboard system using Java and Spring Boot. The syst
 
 ### **Scaling with Docker Compose & Load Balancing**
 * Note : If you are using this, do not use "Containerization with Docker" commands to build and run docker image as compose will do it.
+* Note : Comment out or remove scoreboard.yaml file used for Scaling with Kubernetes.
 * Here we have created 3 replicas of the scoreboard-app and used nginx to balance traffic across our replicas.
 * It will use docker-compose.yml, my_conf.conf and Dockerfile to create image and run containers.
 * It will allow us to access our end-point through different containers with the same Base-URL.
 1. Build and start the containers:
    ```bash
    docker-compose up --build
+---
+
+### **Kubernetes for Scaling (Advanced)**
+1. Build the project to generate .jar file:
+   ```bash
+   mvn clean package
+2. Build the Docker image:
+   ```bash
+   docker build -t scoreboard-app .
+3. Deploy the app:
+   ```bash
+   kubectl apply -f scoreboard.yaml
+4. Verify the pods and service:
+   ```bash
+   kubectl get pods
+   kubectl get svc
+   kubectl get nodes
+   ///// OR ///////
+   kubectl get all
+
+   kubectl describe deployment scoreboard-deployment
+   kubectl describe svc scoreboard-service
+5. Stream Logs for all Pods
+   ```bash
+   kubectl logs -f -l app=scoreboard-app
+6. Verify it is using different pods
+- In Postman, Add new header "Connection: close"
+   ```bash
+   curl -X GET 'http://localhost:8080/api/scoreboard/test' \
+  -H 'Connection: close'
+
 ---
 ### **Contact**
 For questions or support, please contact:
