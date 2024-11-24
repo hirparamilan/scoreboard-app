@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scoreboard-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: scoreboard-app
+  template:
+    metadata:
+      labels:
+        app: scoreboard-app
+    spec:
+      containers:
+        - name: scoreboard-app
+          image: scoreboard-app:latest  # Name matches the local image
+          imagePullPolicy: Never        # Ensure it uses the local image
+          ports:
+            - containerPort: 8080
+          env: # For logging purpose
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: scoreboard-service
+spec:
+  selector:
+    app: scoreboard-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: LoadBalancer
+  sessionAffinity: None

@@ -3,6 +3,7 @@ package com.assessment.scoreboard.controller;
 import com.assessment.scoreboard.model.Player;
 import com.assessment.scoreboard.service.ScoreboardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,5 +36,13 @@ public class ScoreboardController {
     public ResponseEntity<List<Player>> getTopPlayers() {
         System.out.println("controller getTopPlayers method called");
         return ResponseEntity.ok(scoreboardService.getTopPlayers());
+    }
+
+    @Value("${POD_NAME:unknown}")
+    private String podName;
+
+    @GetMapping("/test")
+    public ResponseEntity<String> testApi() {
+        return ResponseEntity.ok("Handled by pod: " + podName);
     }
 }
